@@ -90,6 +90,13 @@ public class XmlFileMacro extends DataBoundTokenMacro {
 
         private DocumentBuilderFactory createFactory() {
             DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
+            String FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
+            try {
+                dFactory.setFeature(FEATURE, true);
+            } catch (ParserConfigurationException e) {
+                throw new IllegalStateException("ParserConfigurationException was thrown. The feature '"
+                    + FEATURE + "' is not supported by your XML processor.", e);
+            }
             HashMap<String, Boolean> features = new HashMap<>();
             features.put(DISALLOW_DOCTYPE_DECL, true);
             features.put(EXTERNAL_GENERAL_ENTITIES, false);
